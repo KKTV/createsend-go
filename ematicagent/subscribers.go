@@ -1,4 +1,4 @@
-package createsend
+package ematicagent
 
 import (
 	"fmt"
@@ -15,6 +15,7 @@ type NewSubscriber struct {
 	CustomFields                           []CustomField `json:",omitempty"`
 	Resubscribe                            bool          `json:",omitempty"`
 	RestartSubscriptionBasedAutoresponders bool          `json:",omitempty"`
+	ConsentToTrack                         string        `json:",omitempty"`
 }
 
 // CustomField represents a subscriber custom data field.
@@ -33,6 +34,10 @@ type CustomField struct {
 func (c *APIClient) AddSubscriber(listID string, sub NewSubscriber) error {
 	u := fmt.Sprintf("subscribers/%s.json", listID)
 
+	if sub.ConsentToTrack == "" {
+		sub.ConsentToTrack = "Unchanged"
+	}
+
 	req, err := c.NewRequest("POST", u, sub)
 	if err != nil {
 		return err
@@ -47,6 +52,10 @@ func (c *APIClient) AddSubscriber(listID string, sub NewSubscriber) error {
 // more information.
 func (c *APIClient) UpdateSubscriber(listID string, email string, sub NewSubscriber) error {
 	u := fmt.Sprintf("subscribers/%s.json?email=%s", listID, email)
+
+	if sub.ConsentToTrack == "" {
+		sub.ConsentToTrack = "Unchanged"
+	}
 
 	req, err := c.NewRequest("PUT", u, sub)
 	if err != nil {
