@@ -1,4 +1,12 @@
-package createsend
+package ematicagent
+
+// Ematic Agent client library to handle api request
+// must of file from the third party library
+//
+// https://github.com/sourcegraph/createsend-go
+//
+// which no longer maintain and support
+//
 
 import (
 	"bytes"
@@ -12,8 +20,8 @@ import (
 
 const (
 	libraryVersion = "0.0.1"
-	userAgent      = "createsend-go/" + libraryVersion
-	defaultBaseURL = "https://api.createsend.com/api/v3.1/"
+	userAgent      = "ematicagent-go/" + libraryVersion
+	defaultBaseURL = "https://api.createsend.com/api/v3.2/"
 )
 
 // A APIClient manages communication with the Campaign Monitor API.
@@ -65,7 +73,6 @@ func (c *APIClient) NewRequest(method, urlStr string, body interface{}) (*http.R
 			return nil, err
 		}
 	}
-
 	req, err := http.NewRequest(method, u.String(), buf)
 	if err != nil {
 		return nil, err
@@ -107,7 +114,7 @@ func (c *APIClient) Do(req *http.Request, v interface{}) error {
 		if c.Log != nil {
 			body, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
-				log.Printf("ReadAll failed: %s")
+				log.Printf("ReadAll failed: %s", err)
 			}
 			c.Log.Printf("http response %d body:\n%s", resp.StatusCode, body)
 		}
