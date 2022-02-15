@@ -1,4 +1,4 @@
-package createsend
+package ematicagent
 
 import (
 	"fmt"
