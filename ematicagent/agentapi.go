@@ -52,7 +52,7 @@ func (a *AgentAPI) SetListID(listID string) (err error) {
 func (a *AgentAPI) AddSubscriber(email string, kv map[string]interface{}) (err error) {
 	sub := NewSubscriber{
 		EmailAddress: email,
-		Resubscribe:  true,
+		Resubscribe:  false,
 	}
 
 	fields := []CustomField{}
@@ -74,7 +74,7 @@ func (a *AgentAPI) AddSubscriber(email string, kv map[string]interface{}) (err e
 func (a *AgentAPI) UpdateSubscriber(email string, kv map[string]interface{}) (err error) {
 	sub := NewSubscriber{
 		EmailAddress: email,
-		Resubscribe:  true,
+		Resubscribe:  false,
 	}
 
 	fields := []CustomField{}
